@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-
 export default function App() {
   const [students, setStudents] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchStudents() {
+      setLoading(true)
       const response = await fetch('https://fakestoreapi.com/products');
       const date = await response.json();
-      setStudents(date)
+      setStudents(date);
+      setLoading(false);
     }
     fetchStudents();
   }, [])
   return (
     <div>
-
-      <div className="app">
+      {
+        loading ? <div className="spinner" loading></div>
+        : <div className="app">
         <header className="header">
           <div className="logo">MyStore</div>
           <nav className="nav">
@@ -34,37 +36,36 @@ export default function App() {
               <img src={s.image} alt={s.title} className="product-image" />
             </li>
           )
-        })}
-      </div>
+        })}</div>
+      }
       <footer class="multi-column-footer">
-    <div class="footer-content">
-        <div class="footer-column">
+        <div class="footer-content">
+          <div class="footer-column">
             <h4>Company</h4>
             <ul class="footer-links">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Blog</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Blog</a></li>
             </ul>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Support</h4>
             <ul class="footer-links">
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Contact Support</a></li>
-                <li><a href="#">FAQs</a></li>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Support</a></li>
+              <li><a href="#">FAQs</a></li>
             </ul>
-        </div>
-        <div class="footer-column">
+          </div>
+          <div class="footer-column">
             <h4>Legal</h4>
             <ul class="footer-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Cookie Policy</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Cookie Policy</a></li>
             </ul>
+          </div>
         </div>
-    </div>
-</footer>
-
+      </footer>
     </div>
   )
 }
